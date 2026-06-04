@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Организационен календар</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#ffffff; --ink:#172033; --muted:#657084; --line:#d9dee8;
+      --low:#e7f5ee; --normal:#fff4cf; --high:#ffe2c7; --risk:#ffd6d6;
+      --low-b:#52a66f; --normal-b:#c7a400; --high-b:#d9791f; --risk-b:#c94747;
+      --school:#5b8def; --program:#8b5cf6; --merl:#10a37f; --events:#f59e0b; --internal:#64748b;
+      --shadow:0 10px 30px rgba(23,32,51,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+    header{padding:28px 32px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f9fafc)}
+    h1{margin:0;font-size:30px;letter-spacing:-.03em}.sub{margin-top:8px;color:var(--muted);font-size:14px}.source{margin-top:10px;font-size:12px;color:var(--muted);word-break:break-all}
+    .wrap{display:grid;grid-template-columns:320px 1fr;gap:18px;padding:20px 24px 36px}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+    aside{padding:16px;position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto}.main{padding:0;background:transparent;border:0;box-shadow:none}
+    .filter-block{margin-bottom:16px}.label{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.06em;margin-bottom:8px}
+    select,input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-size:14px}button{border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px 12px;cursor:pointer;font-weight:600}button:hover{background:#f3f5f8}.btnrow{display:flex;gap:8px;flex-wrap:wrap}.btnrow button{flex:1}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.stat{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fbfcff}.stat b{display:block;font-size:20px}.stat span{font-size:11px;color:var(--muted)}
+    .legend{display:grid;gap:7px;font-size:12px;color:var(--muted)}.leg{display:flex;align-items:center;gap:8px}.sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.08)}
+    .q{margin-bottom:20px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.qhead{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:18px 20px;background:#fff;border-bottom:1px solid var(--line)}
+    .qtitle{font-size:22px;font-weight:800;letter-spacing:-.02em}.qmeta{font-size:13px;color:var(--muted)}.qstats{font-size:13px;color:var(--muted)}
+    .months{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:0}.month{padding:16px;border-right:1px solid var(--line);min-height:220px}.month:nth-child(3n){border-right:0}.mname{font-weight:800;font-size:16px;margin-bottom:10px}.weeks{display:grid;gap:8px}
+    .week{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff;cursor:pointer;transition:.15s transform,.15s box-shadow;position:relative;overflow:hidden}.week:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(23,32,51,.10)}.week.selected{outline:3px solid #263b7b33}
+    .week.low{background:var(--low);border-color:#cde8d7}.week.normal{background:var(--normal);border-color:#eadf9d}.week.high{background:var(--high);border-color:#edbf98}.week.risk{background:var(--risk);border-color:#efaaaa}
+    .wtop{display:flex;justify-content:space-between;gap:8px;align-items:center}.wdate{font-size:12px;font-weight:700}.wload{font-size:12px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(0,0,0,.08);padding:3px 7px}.wcount{font-size:12px;color:var(--muted);margin-top:4px}.bars{display:flex;gap:3px;margin-top:8px;height:5px}.bar{height:5px;border-radius:999px;flex:1;opacity:.9}.bar.school{background:var(--school)}.bar.program{background:var(--program)}.bar.merl{background:var(--merl)}.bar.events{background:var(--events)}.bar.internal{background:var(--internal)}
+    .details{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}.details h3{margin:0 0 8px;font-size:16px}.event{border:1px solid var(--line);border-radius:14px;padding:10px;margin:8px 0;background:#fff}.event-title{font-weight:800}.event-meta{margin-top:5px;font-size:12px;color:var(--muted);line-height:1.45}.pill{display:inline-block;border-radius:999px;padding:3px 7px;font-size:11px;margin:4px 4px 0 0;background:#f0f2f6;color:#485366}.empty{padding:30px;text-align:center;color:var(--muted)}.warn{padding:12px;border:1px solid #f2c94c;background:#fff7d8;border-radius:14px;color:#6b5600;margin-bottom:12px}.error{padding:12px;border:1px solid #f0a0a0;background:#fff0f0;border-radius:14px;color:#8a1f1f;margin-bottom:12px}
+    @media(max-width:980px){.wrap{grid-template-columns:1fr}.months{grid-template-columns:1fr}.month{border-right:0;border-bottom:1px solid var(--line)}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Организационен календар</h1>
+  <div class="sub">1 януари 2026 – 1 юни 2027 · по тримесечия, екипи, слоеве и аудитории</div>
+  <div class="source">Live source: <span id="sourceUrl"></span></div>
+</header>
+<div class="wrap">
+  <aside class="panel">
+    <div id="status" class="warn">Зареждам данните от Google Sheet…</div>
+    <div class="filter-block"><div class="label">Търсене</div><input id="search" placeholder="събитие, бележка, екип…" /></div>
+    <div class="filter-block"><div class="label">Тримесечие</div><select id="quarter"></select></div>
+    <div class="filter-block"><div class="label">Екип</div><select id="team"></select></div>
+    <div class="filter-block"><div class="label">Слой</div><select id="layer"></select></div>
+    <div class="filter-block"><div class="label">Аудитория</div><select id="audience"></select></div>
+    <div class="filter-block"><div class="label">Зона</div><select id="zone"><option value="all">Всички</option><option value="highrisk">Само оранжеви/червени</option><option value="risk">Само червени</option></select></div>
+    <div class="btnrow"><button id="reset">Изчисти</button><button id="reload">Презареди</button></div>
+    <div class="stats"><div class="stat"><b id="evCount">–</b><span>събития</span></div><div class="stat"><b id="riskCount">–</b><span>рискови седмици</span></div><div class="stat"><b id="maxLoad">–</b><span>макс. индекс</span></div><div class="stat"><b id="shownWeeks">–</b><span>седмици</span></div></div>
+    <div class="details" id="details"><h3>Избери седмица</h3><div class="event-meta">Клик върху седмица в календара, за да видиш кои събития формират натоварването.</div></div>
+    <div class="details"><h3>Легенда</h3><div class="legend">
+      <div class="leg"><span class="sw" style="background:var(--low)"></span>0–3 ниско</div><div class="leg"><span class="sw" style="background:var(--normal)"></span>4–7 нормално</div><div class="leg"><span class="sw" style="background:var(--high)"></span>8–12 натоварено</div><div class="leg"><span class="sw" style="background:var(--risk)"></span>13+ рисково</div>
+      <div class="leg"><span class="sw" style="background:var(--school)"></span>Училищен календар</div><div class="leg"><span class="sw" style="background:var(--program)"></span>Програмна дейност</div><div class="leg"><span class="sw" style="background:var(--merl)"></span>MERL / данни и учене</div><div class="leg"><span class="sw" style="background:var(--events)"></span>Събития и кампании</div><div class="leg"><span class="sw" style="background:var(--internal)"></span>Вътрешен ритъм</div>
+    </div></div>
+  </aside>
+  <main class="main" id="calendar"></main>
+</div>
+<script>
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vREQ0RWWQUR-glUtZrg63NG8A1Er0AQG3mFg0jlyNvZ90P34uePbVpUN1eUfR_zkWK2bSnKRntMcUoR/pub?gid=1889473098&single=true&output=csv";
+document.getElementById('sourceUrl').textContent = CSV_URL;
+const RANGE_START = new Date('2026-01-01T00:00:00');
+const RANGE_END = new Date('2027-06-01T23:59:59');
+let allEvents = [], weeks = [], selectedWeekKey = null;
+const $ = id => document.getElementById(id);
+const bgMonths = ['януари','февруари','март','април','май','юни','юли','август','септември','октомври','ноември','декември'];
+function parseCSV(text){
+  const rows=[]; let row=[], cur='', inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i], n=text[i+1];
+    if(c==='"') { if(inQ && n==='"'){cur+='"'; i++;} else inQ=!inQ; }
+    else if(c===',' && !inQ){ row.push(cur); cur=''; }
+    else if((c==='\n'||c==='\r') && !inQ){ if(c==='\r'&&n==='\n') i++; row.push(cur); if(row.some(x=>x.trim()!=='')) rows.push(row); row=[]; cur=''; }
+    else cur+=c;
+  }
+  row.push(cur); if(row.some(x=>x.trim()!=='')) rows.push(row);
+  const headers=rows.shift().map(h=>h.trim());
+  return rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,(r[i]||'').trim()])));
+}
+function parseDate(v){ if(!v) return null; const d=new Date(v+'T00:00:00'); return isNaN(d) ? new Date(v) : d; }
+function fmt(d){return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`}
+function monthLabel(d){return `${bgMonths[d.getMonth()]} ${d.getFullYear()}`}
+function qNum(d){return Math.floor(d.getMonth()/3)+1}
+function qLabel(d){const q=qNum(d); const labels={1:'януари–март',2:'април–юни',3:'юли–септември',4:'октомври–декември'}; return `Q${q} ${d.getFullYear()}: ${labels[q]}`}
+function monday(d){const x=new Date(d); const day=(x.getDay()+6)%7; x.setDate(x.getDate()-day); x.setHours(0,0,0,0); return x;}
+function addDays(d,n){const x=new Date(d); x.setDate(x.getDate()+n); return x;}
+function overlaps(aStart,aEnd,bStart,bEnd){return aStart<=bEnd && aEnd>=bStart}
+function zone(load){ if(load>=13) return 'risk'; if(load>=8) return 'high'; if(load>=4) return 'normal'; return 'low'; }
+function zoneLabel(z){return {low:'ниско',normal:'нормално',high:'натоварено',risk:'рисково'}[z]||z}
+function layerClass(layer){ const l=(layer||'').toLowerCase(); if(l.includes('училищ')) return 'school'; if(l.includes('merl')||l.includes('данни')) return 'merl'; if(l.includes('събит')||l.includes('кампан')) return 'events'; if(l.includes('вътреш')) return 'internal'; return 'program'; }
+function normalize(rows){ return rows.map((r,i)=>{const s=parseDate(r.start_date), e=parseDate(r.end_date)||s; return {...r, _id:i, _start:s, _end:e, _intensity:Number(r.intensity_1_5)||0};}).filter(r=>r._start && r._end && overlaps(r._start,r._end,RANGE_START,RANGE_END)); }
+function makeWeeks(){ let cur=monday(RANGE_START); const out=[]; while(cur<=RANGE_END){const end=addDays(cur,6); out.push({key:cur.toISOString().slice(0,10), start:new Date(cur), end}); cur=addDays(cur,7);} return out; }
+function unique(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'bg'))}
+function fillSelect(id, values, allLabel){ const el=$(id); const old=el.value; el.innerHTML=`<option value="all">${allLabel}</option>`+values.map(v=>`<option>${escapeHtml(v)}</option>`).join(''); if([...el.options].some(o=>o.value===old)) el.value=old; }
+function escapeHtml(s){return String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function eventPasses(e){ const term=$('search').value.toLowerCase().trim(); if(term){const blob=[e.event_name,e.team_owner,e.layer,e.audience,e.notes,e.source_calendar].join(' ').toLowerCase(); if(!blob.includes(term)) return false;} if($('team').value!=='all' && e.team_owner!==$('team').value) return false; if($('layer').value!=='all' && e.layer!==$('layer').value) return false; if($('audience').value!=='all' && !(e.audience||'').includes($('audience').value)) return false; return true; }
+function weekEvents(w){return allEvents.filter(e=>eventPasses(e)&&overlaps(e._start,e._end,w.start,w.end));}
+function computeWeek(w){ const evs=weekEvents(w); const load=evs.reduce((s,e)=>s+e._intensity,0); return {evs,load,z:zone(load)}; }
+function render(){ const cal=$('calendar'); const qFilter=$('quarter').value; const groups={}; let visibleWeeks=0, riskWeeks=0, maxLoad=0, evShown=new Set();
+  weeks.forEach(w=>{ const q=qLabel(w.start); if(qFilter!=='all' && q!==qFilter) return; const c=computeWeek(w); if($('zone').value==='risk' && c.z!=='risk') return; if($('zone').value==='highrisk' && !(c.z==='risk'||c.z==='high')) return; c.evs.forEach(e=>evShown.add(e._id)); visibleWeeks++; if(c.z==='risk') riskWeeks++; maxLoad=Math.max(maxLoad,c.load); (groups[q]??=[]).push({...w,...c}); });
+  $('evCount').textContent=evShown.size; $('riskCount').textContent=riskWeeks; $('maxLoad').textContent=maxLoad; $('shownWeeks').textContent=visibleWeeks;
+  if(!Object.keys(groups).length){cal.innerHTML='<div class="panel empty">Няма събития за избраните филтри.</div>'; return;}
+  cal.innerHTML=Object.entries(groups).map(([q,ws])=>renderQuarter(q,ws)).join('');
+  document.querySelectorAll('.week').forEach(el=>el.addEventListener('click',()=>selectWeek(el.dataset.key)));
+}
+function renderQuarter(q, ws){ const months={}; ws.forEach(w=>{const m=monthLabel(w.start); (months[m]??=[]).push(w);}); const load=ws.reduce((s,w)=>s+w.load,0); const rc=ws.filter(w=>w.z==='risk').length; return `<section class="q"><div class="qhead"><div><div class="qtitle">${escapeHtml(q)}</div><div class="qmeta">${Object.keys(months).join(' · ')}</div></div><div class="qstats">общ индекс: <b>${load}</b> · червени седмици: <b>${rc}</b></div></div><div class="months">${Object.entries(months).map(([m,mw])=>`<div class="month"><div class="mname">${escapeHtml(m)}</div><div class="weeks">${mw.map(renderWeek).join('')}</div></div>`).join('')}</div></section>`; }
+function renderWeek(w){ const layers=[...new Set(w.evs.map(e=>layerClass(e.layer)))]; return `<div class="week ${w.z} ${selectedWeekKey===w.key?'selected':''}" data-key="${w.key}"><div class="wtop"><div class="wdate">${fmt(w.start)} – ${fmt(w.end)}</div><div class="wload">${w.load}</div></div><div class="wcount">${w.evs.length} събития · ${zoneLabel(w.z)}</div><div class="bars">${layers.map(l=>`<span class="bar ${l}"></span>`).join('')}</div></div>`; }
+function selectWeek(key){ selectedWeekKey=key; const w=weeks.find(x=>x.key===key); const c=computeWeek(w); $('details').innerHTML=`<h3>${fmt(w.start)} – ${fmt(w.end)}</h3><div class="event-meta">Индекс: <b>${c.load}</b> · зона: <b>${zoneLabel(c.z)}</b> · ${c.evs.length} събития</div>` + (c.evs.length? c.evs.sort((a,b)=>a._start-b._start).map(e=>`<div class="event"><div class="event-title">${escapeHtml(e.event_name)}</div><div class="event-meta">${fmt(e._start)} – ${fmt(e._end)} · ${escapeHtml(e.team_owner)} · ${escapeHtml(e.layer)} · тежест ${e._intensity}</div><div><span class="pill">${escapeHtml(e.audience)}</span><span class="pill">${escapeHtml(e.status)}</span><span class="pill">${escapeHtml(e.confidence)}</span></div>${e.notes?`<div class="event-meta" style="margin-top:8px">${escapeHtml(e.notes)}</div>`:''}</div>`).join(''):'<div class="event-meta">Няма събития.</div>'); render(); }
+async function load(){ $('status').className='warn'; $('status').textContent='Зареждам данните от Google Sheet…'; try{ const res=await fetch(CSV_URL+'&cacheBust='+Date.now()); if(!res.ok) throw new Error(res.status+' '+res.statusText); const text=await res.text(); allEvents=normalize(parseCSV(text)); weeks=makeWeeks(); fillSelect('team',unique(allEvents.map(e=>e.team_owner)),'Всички екипи'); fillSelect('layer',unique(allEvents.map(e=>e.layer)),'Всички слоеве'); fillSelect('audience',unique(allEvents.flatMap(e=>(e.audience||'').split(';').map(x=>x.trim()))),'Всички аудитории'); fillSelect('quarter',unique(weeks.map(w=>qLabel(w.start))),'Всички тримесечия'); $('status').className='warn'; $('status').textContent=`Заредени са ${allEvents.length} събития. Последно обновяване: ${new Date().toLocaleString('bg-BG')}`; render(); } catch(err){ $('status').className='error'; $('status').textContent='Грешка при зареждане: '+err.message; } }
+['search','quarter','team','layer','audience','zone'].forEach(id=>$(id).addEventListener('input',render)); $('reset').onclick=()=>{['search','quarter','team','layer','audience','zone'].forEach(id=>$(id).value='all'); $('search').value=''; selectedWeekKey=null; render();}; $('reload').onclick=load; load();
+</script>
+</body>
+</html>
