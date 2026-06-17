@@ -15,17 +15,17 @@
       --muted: #657084;
       --line: #d9dee8;
 
-      --low: #e7f5ee;
-      --normal: #fff4cf;
-      --high: #ffe2c7;
-      --risk: #ffd6d6;
+      --calm: #e7f5ee;
+      --active: #fff4cf;
+      --busy: #ffe2c7;
+      --packed: #ffd6d6;
+
+      --calm-border: #b9dfc7;
+      --active-border: #e1ce78;
+      --busy-border: #e6ad77;
+      --packed-border: #e59a9a;
 
       --school: #5b8def;
-      --program: #8b5cf6;
-      --merl: #10a37f;
-      --events: #f59e0b;
-      --internal: #64748b;
-
       --shadow: 0 10px 30px rgba(23, 32, 51, 0.08);
     }
 
@@ -36,9 +36,16 @@
     body {
       margin: 0;
       background: var(--bg);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Arial, sans-serif;
       color: var(--ink);
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
     }
 
     header {
@@ -53,46 +60,69 @@
       letter-spacing: -0.03em;
     }
 
-    .sub {
+    .subtitle {
       margin-top: 8px;
       color: var(--muted);
       font-size: 14px;
     }
 
     .updated {
-      margin-top: 10px;
+      margin-top: 9px;
       color: var(--muted);
       font-size: 12px;
     }
 
     .wrap {
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 340px minmax(0, 1fr);
       gap: 18px;
       padding: 20px 24px 36px;
     }
 
     .panel {
-      background: var(--card);
       border: 1px solid var(--line);
       border-radius: 18px;
+      background: var(--card);
       box-shadow: var(--shadow);
     }
 
     aside {
-      padding: 16px;
       position: sticky;
       top: 12px;
       align-self: start;
       max-height: calc(100vh - 24px);
       overflow: auto;
+      padding: 16px;
     }
 
     .main {
-      padding: 0;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
+      min-width: 0;
+    }
+
+    .status {
+      margin-bottom: 16px;
+      padding: 11px 12px;
+      border-radius: 13px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .status.loading {
+      border: 1px solid #f2c94c;
+      background: #fff7d8;
+      color: #6b5600;
+    }
+
+    .status.success {
+      border: 1px solid #b9dfc7;
+      background: #eefaf2;
+      color: #245d37;
+    }
+
+    .status.error {
+      border: 1px solid #f0a0a0;
+      background: #fff0f0;
+      color: #8a1f1f;
     }
 
     .filter-block {
@@ -108,8 +138,7 @@
       text-transform: uppercase;
     }
 
-    select,
-    input[type="text"] {
+    select {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid var(--line);
@@ -119,34 +148,13 @@
       font-size: 14px;
     }
 
-    .check-row {
+    .button-row {
       display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      padding: 10px 11px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fbfcff;
-      cursor: pointer;
-    }
-
-    .check-row input {
-      margin-top: 2px;
-    }
-
-    .check-copy {
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .check-copy small {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 11px;
+      gap: 8px;
     }
 
     button {
+      flex: 1;
       padding: 10px 12px;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -159,21 +167,11 @@
       background: #f3f5f8;
     }
 
-    .btnrow {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .btnrow button {
-      flex: 1;
-    }
-
     .stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
     }
 
     .stat {
@@ -191,212 +189,17 @@
     .stat span {
       color: var(--muted);
       font-size: 11px;
+      line-height: 1.25;
     }
 
-    .index-note {
+    .note {
       margin-top: 10px;
-      padding: 9px 10px;
+      padding: 10px;
       border-radius: 12px;
       background: #f3f5f9;
       color: var(--muted);
       font-size: 11px;
-      line-height: 1.4;
-    }
-
-    .legend {
-      display: grid;
-      gap: 7px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .leg {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .sw {
-      width: 14px;
-      height: 14px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 4px;
-      flex: 0 0 auto;
-    }
-
-    .q {
-      margin-bottom: 20px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--card);
-      box-shadow: var(--shadow);
-    }
-
-    .qhead {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--line);
-      background: #ffffff;
-    }
-
-    .qtitle {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .qmeta {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .qstats {
-      text-align: right;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .qstats b {
-      color: var(--ink);
-    }
-
-    .months {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .month {
-      min-height: 220px;
-      padding: 16px;
-      border-right: 1px solid var(--line);
-    }
-
-    .month:nth-child(3n) {
-      border-right: 0;
-    }
-
-    .mname {
-      margin-bottom: 10px;
-      font-size: 16px;
-      font-weight: 800;
-    }
-
-    .weeks {
-      display: grid;
-      gap: 8px;
-    }
-
-    .week {
-      position: relative;
-      overflow: hidden;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #ffffff;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    .week:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(23, 32, 51, 0.1);
-    }
-
-    .week.selected {
-      outline: 3px solid rgba(38, 59, 123, 0.2);
-    }
-
-    .week.low {
-      border-color: #cde8d7;
-      background: var(--low);
-    }
-
-    .week.normal {
-      border-color: #eadf9d;
-      background: var(--normal);
-    }
-
-    .week.high {
-      border-color: #edbf98;
-      background: var(--high);
-    }
-
-    .week.risk {
-      border-color: #efaaaa;
-      background: var(--risk);
-    }
-
-    .wtop {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .wdate {
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .wload {
-      padding: 3px 7px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .wzone {
-      margin-top: 5px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .wcount {
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .dots {
-      display: flex;
-      gap: 5px;
-      min-height: 8px;
-      margin-top: 8px;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex: 0 0 auto;
-    }
-
-    .dot.school {
-      background: var(--school);
-    }
-
-    .dot.program {
-      background: var(--program);
-    }
-
-    .dot.merl {
-      background: var(--merl);
-    }
-
-    .dot.events {
-      background: var(--events);
-    }
-
-    .dot.internal {
-      background: var(--internal);
+      line-height: 1.45;
     }
 
     .details {
@@ -410,8 +213,198 @@
       font-size: 16px;
     }
 
-    .event {
-      margin: 8px 0;
+    .details-summary {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+    }
+
+    .quarter {
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .quarter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .quarter-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .quarter-months {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .quarter-stats {
+      text-align: right;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .quarter-stats b {
+      color: var(--ink);
+    }
+
+    .months {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .month {
+      min-width: 0;
+      min-height: 220px;
+      padding: 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .month:nth-child(3n) {
+      border-right: 0;
+    }
+
+    .month-title {
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .weeks {
+      display: grid;
+      gap: 8px;
+    }
+
+    .week {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      cursor: pointer;
+      transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+    }
+
+    .week:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(23, 32, 51, 0.1);
+    }
+
+    .week.selected {
+      outline: 3px solid rgba(38, 59, 123, 0.2);
+    }
+
+    .week.calm {
+      border-color: var(--calm-border);
+      background: var(--calm);
+    }
+
+    .week.active {
+      border-color: var(--active-border);
+      background: var(--active);
+    }
+
+    .week.busy {
+      border-color: var(--busy-border);
+      background: var(--busy);
+    }
+
+    .week.packed {
+      border-color: var(--packed-border);
+      background: var(--packed);
+    }
+
+    .week-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .week-date {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .week-count-badge {
+      padding: 3px 7px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .week-zone {
+      margin-top: 5px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .week-meta {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .school-context {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      color: #405d93;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .school-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      margin-top: 3px;
+      border-radius: 50%;
+      background: var(--school);
+    }
+
+    .event-card {
+      margin-top: 8px;
       padding: 10px;
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -429,9 +422,9 @@
       line-height: 1.45;
     }
 
-    .pill {
+    .team-pill {
       display: inline-block;
-      margin: 4px 4px 0 0;
+      margin-top: 6px;
       padding: 3px 7px;
       border-radius: 999px;
       background: #f0f2f6;
@@ -439,67 +432,41 @@
       font-size: 11px;
     }
 
-    .layer-breakdown {
-      margin-top: 10px;
-      display: grid;
-      gap: 5px;
+    .context-heading {
+      margin-top: 14px;
+      color: #405d93;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .layer-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 6px 8px;
-      border-radius: 9px;
-      background: #f7f8fb;
-      color: var(--muted);
-      font-size: 11px;
+    .context-card {
+      margin-top: 7px;
+      padding: 9px 10px;
+      border: 1px solid #cbd9f3;
+      border-radius: 12px;
+      background: #f3f7ff;
     }
 
-    .layer-line b {
-      color: var(--ink);
+    .context-card .event-title {
+      color: #314f85;
+      font-size: 12px;
     }
 
     .empty {
-      padding: 30px;
+      padding: 32px;
       text-align: center;
       color: var(--muted);
     }
 
-    .warn {
-      margin-bottom: 12px;
-      padding: 12px;
-      border: 1px solid #f2c94c;
-      border-radius: 14px;
-      background: #fff7d8;
-      color: #6b5600;
-    }
-
-    .success {
-      margin-bottom: 12px;
-      padding: 12px;
-      border: 1px solid #b9dfc7;
-      border-radius: 14px;
-      background: #eefaf2;
-      color: #245d37;
-    }
-
-    .error {
-      margin-bottom: 12px;
-      padding: 12px;
-      border: 1px solid #f0a0a0;
-      border-radius: 14px;
-      background: #fff0f0;
-      color: #8a1f1f;
-    }
-
-    @media (max-width: 1100px) {
+    @media (max-width: 1050px) {
       .wrap {
-        grid-template-columns: 330px 1fr;
+        grid-template-columns: 310px minmax(0, 1fr);
       }
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 900px) {
       .wrap {
         grid-template-columns: 1fr;
       }
@@ -518,12 +485,12 @@
         border-bottom: 1px solid var(--line);
       }
 
-      .qhead {
+      .quarter-header {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .qstats {
+      .quarter-stats {
         text-align: left;
       }
     }
@@ -534,8 +501,8 @@
   <header>
     <h1>Организационен календар</h1>
 
-    <div class="sub">
-      1 януари 2026 – 1 юни 2027 · по тримесечия, екипи, слоеве и аудитории
+    <div class="subtitle">
+      Значими дейности и събития · 1 януари 2026 – 1 юни 2027
     </div>
 
     <div class="updated" id="lastUpdated">
@@ -545,8 +512,8 @@
 
   <div class="wrap">
     <aside class="panel">
-      <div id="status" class="warn">
-        Зареждам данните от Google Sheet…
+      <div id="status" class="status loading">
+        Зареждам данните…
       </div>
 
       <div class="filter-block">
@@ -559,131 +526,90 @@
         <select id="team"></select>
       </div>
 
-      <div class="filter-block">
-        <div class="label">Слой</div>
-        <select id="layer"></select>
-      </div>
-
-      <div class="filter-block">
-        <div class="label">Аудитория</div>
-        <select id="audience"></select>
-      </div>
-
-      <div class="filter-block">
-        <div class="label">Търсене</div>
-        <input
-          id="search"
-          type="text"
-          placeholder="Събитие, бележка, екип…"
-        />
-      </div>
-
-      <div class="filter-block">
-        <label class="check-row">
-          <input id="attentionOnly" type="checkbox" />
-
-          <span class="check-copy">
-            Покажи само седмици за внимание
-            <small>Натоварени и рискови седмици</small>
-          </span>
-        </label>
-      </div>
-
-      <div class="btnrow">
+      <div class="button-row">
         <button id="reset">Изчисти</button>
         <button id="reload">Презареди</button>
       </div>
 
       <div class="stats">
         <div class="stat">
-          <b id="evCount">–</b>
-          <span>събития</span>
+          <b id="eventCount">–</b>
+          <span>значими събития</span>
         </div>
 
         <div class="stat">
-          <b id="attentionCount">–</b>
-          <span>седмици за внимание</span>
+          <b id="teamCount">–</b>
+          <span>активни екипи</span>
         </div>
 
         <div class="stat">
-          <b id="maxLoad">–</b>
-          <span>макс. индекс</span>
+          <b id="busyWeekCount">–</b>
+          <span>натоварени и напечени седмици</span>
         </div>
 
         <div class="stat">
-          <b id="shownWeeks">–</b>
-          <span>показани седмици</span>
+          <b id="peakCount">–</b>
+          <span>макс. събития в седмица</span>
         </div>
       </div>
 
-      <div class="index-note">
-        Индексът показва натоварването само за активните филтри.
-        За всеки слой се взима най-високата тежест през седмицата,
-        за да не се броят няколко сходни събития многократно.
+      <div class="note">
+        Цветът се определя от броя значими организационни дейности
+        през седмицата. Училищният календар се показва като контекст,
+        но не участва в броя.
       </div>
 
       <div class="details" id="details">
         <h3>Избери седмица</h3>
 
-        <div class="event-meta">
-          Кликни върху седмица в календара, за да видиш събитията
-          и слоевете, които формират натоварването.
+        <div class="details-summary">
+          Кликни върху седмица, за да видиш кои организационни
+          събития и екипи се наслагват в нея.
         </div>
       </div>
 
       <div class="details">
-        <h3>Зони</h3>
+        <h3>Легенда</h3>
 
         <div class="legend">
-          <div class="leg">
-            <span class="sw" style="background: var(--low)"></span>
-            0–3 · Има капацитет
+          <div class="legend-row">
+            <span
+              class="swatch"
+              style="background: var(--calm)"
+            ></span>
+            0–1 · Спокойна седмица
           </div>
 
-          <div class="leg">
-            <span class="sw" style="background: var(--normal)"></span>
-            4–7 · ОК за планиране
+          <div class="legend-row">
+            <span
+              class="swatch"
+              style="background: var(--active)"
+            ></span>
+            2–3 · Активна седмица
           </div>
 
-          <div class="leg">
-            <span class="sw" style="background: var(--high)"></span>
-            8–12 · Планирай внимателно
+          <div class="legend-row">
+            <span
+              class="swatch"
+              style="background: var(--busy)"
+            ></span>
+            4–5 · Натоварена седмица
           </div>
 
-          <div class="leg">
-            <span class="sw" style="background: var(--risk)"></span>
-            13+ · Не добавяй без причина
-          </div>
-        </div>
-      </div>
-
-      <div class="details">
-        <h3>Слоеве</h3>
-
-        <div class="legend">
-          <div class="leg">
-            <span class="sw" style="background: var(--school)"></span>
-            Училищен календар
+          <div class="legend-row">
+            <span
+              class="swatch"
+              style="background: var(--packed)"
+            ></span>
+            6+ · Напечена седмица
           </div>
 
-          <div class="leg">
-            <span class="sw" style="background: var(--program)"></span>
-            Програмна дейност
-          </div>
-
-          <div class="leg">
-            <span class="sw" style="background: var(--merl)"></span>
-            MERL / данни и учене
-          </div>
-
-          <div class="leg">
-            <span class="sw" style="background: var(--events)"></span>
-            Събития и кампании
-          </div>
-
-          <div class="leg">
-            <span class="sw" style="background: var(--internal)"></span>
-            Вътрешноорганизационен ритъм
+          <div class="legend-row">
+            <span
+              class="swatch"
+              style="background: var(--school)"
+            ></span>
+            Контекст от училищния календар
           </div>
         </div>
       </div>
@@ -699,7 +625,7 @@
     const RANGE_START = new Date("2026-01-01T00:00:00");
     const RANGE_END = new Date("2027-06-01T23:59:59");
 
-    const bgMonths = [
+    const MONTHS_BG = [
       "януари",
       "февруари",
       "март",
@@ -722,52 +648,62 @@
 
     function parseCSV(text) {
       const rows = [];
-      let row = [];
-      let current = "";
-      let inQuotes = false;
 
-      for (let i = 0; i < text.length; i++) {
-        const character = text[i];
-        const nextCharacter = text[i + 1];
+      let row = [];
+      let currentCell = "";
+      let insideQuotes = false;
+
+      for (let index = 0; index < text.length; index++) {
+        const character = text[index];
+        const nextCharacter = text[index + 1];
 
         if (character === '"') {
-          if (inQuotes && nextCharacter === '"') {
-            current += '"';
-            i++;
+          if (insideQuotes && nextCharacter === '"') {
+            currentCell += '"';
+            index++;
           } else {
-            inQuotes = !inQuotes;
+            insideQuotes = !insideQuotes;
           }
-        } else if (character === "," && !inQuotes) {
-          row.push(current);
-          current = "";
+        } else if (character === "," && !insideQuotes) {
+          row.push(currentCell);
+          currentCell = "";
         } else if (
           (character === "\n" || character === "\r") &&
-          !inQuotes
+          !insideQuotes
         ) {
-          if (character === "\r" && nextCharacter === "\n") {
-            i++;
+          if (
+            character === "\r" &&
+            nextCharacter === "\n"
+          ) {
+            index++;
           }
 
-          row.push(current);
+          row.push(currentCell);
 
           if (row.some((cell) => cell.trim() !== "")) {
             rows.push(row);
           }
 
           row = [];
-          current = "";
+          currentCell = "";
         } else {
-          current += character;
+          currentCell += character;
         }
       }
 
-      row.push(current);
+      row.push(currentCell);
 
       if (row.some((cell) => cell.trim() !== "")) {
         rows.push(row);
       }
 
-      const headers = rows.shift().map((header) => header.trim());
+      if (!rows.length) {
+        return [];
+      }
+
+      const headers = rows
+        .shift()
+        .map((header) => header.trim());
 
       return rows.map((dataRow) =>
         Object.fromEntries(
@@ -792,197 +728,9 @@
 
       const fallback = new Date(value);
 
-      return Number.isNaN(fallback.getTime()) ? null : fallback;
-    }
-
-    function formatDate(date) {
-      return `${String(date.getDate()).padStart(2, "0")}.${String(
-        date.getMonth() + 1
-      ).padStart(2, "0")}.${date.getFullYear()}`;
-    }
-
-    function monthLabel(date) {
-      return `${bgMonths[date.getMonth()]} ${date.getFullYear()}`;
-    }
-
-    function quarterNumber(date) {
-      return Math.floor(date.getMonth() / 3) + 1;
-    }
-
-    function quarterLabel(date) {
-      const quarter = quarterNumber(date);
-
-      const labels = {
-        1: "януари–март",
-        2: "април–юни",
-        3: "юли–септември",
-        4: "октомври–декември"
-      };
-
-      return `Q${quarter} ${date.getFullYear()}: ${labels[quarter]}`;
-    }
-
-    function monday(date) {
-      const result = new Date(date);
-      const offset = (result.getDay() + 6) % 7;
-
-      result.setDate(result.getDate() - offset);
-      result.setHours(0, 0, 0, 0);
-
-      return result;
-    }
-
-    function addDays(date, numberOfDays) {
-      const result = new Date(date);
-      result.setDate(result.getDate() + numberOfDays);
-      return result;
-    }
-
-    function overlaps(startA, endA, startB, endB) {
-      return startA <= endB && endA >= startB;
-    }
-
-    function zone(load) {
-      if (load >= 13) {
-        return "risk";
-      }
-
-      if (load >= 8) {
-        return "high";
-      }
-
-      if (load >= 4) {
-        return "normal";
-      }
-
-      return "low";
-    }
-
-    function zoneLabel(zoneName) {
-      const labels = {
-        low: "Има капацитет",
-        normal: "ОК за планиране",
-        high: "Планирай внимателно",
-        risk: "Не добавяй без причина"
-      };
-
-      return labels[zoneName] || zoneName;
-    }
-
-    function layerClass(layer) {
-      const normalizedLayer = (layer || "").toLowerCase();
-
-      if (normalizedLayer.includes("училищ")) {
-        return "school";
-      }
-
-      if (
-        normalizedLayer.includes("merl") ||
-        normalizedLayer.includes("данни")
-      ) {
-        return "merl";
-      }
-
-      if (
-        normalizedLayer.includes("събит") ||
-        normalizedLayer.includes("кампан")
-      ) {
-        return "events";
-      }
-
-      if (normalizedLayer.includes("вътреш")) {
-        return "internal";
-      }
-
-      return "program";
-    }
-
-    function layerDisplayName(layerKey) {
-      const labels = {
-        school: "Училищен календар",
-        program: "Програмна дейност",
-        merl: "MERL / данни и учене",
-        events: "Събития и кампании",
-        internal: "Вътрешноорганизационен ритъм"
-      };
-
-      return labels[layerKey] || layerKey;
-    }
-
-    function normalize(rows) {
-      return rows
-        .map((row, index) => {
-          const startDate = parseDate(row.start_date);
-          const endDate = parseDate(row.end_date) || startDate;
-
-          return {
-            ...row,
-            _id: index,
-            _start: startDate,
-            _end: endDate,
-            _intensity: Number(row.intensity_1_5) || 0
-          };
-        })
-        .filter(
-          (event) =>
-            event._start &&
-            event._end &&
-            overlaps(
-              event._start,
-              event._end,
-              RANGE_START,
-              RANGE_END
-            )
-        );
-    }
-
-    function makeWeeks() {
-      let current = monday(RANGE_START);
-      const result = [];
-
-      while (current <= RANGE_END) {
-        const end = addDays(current, 6);
-
-        result.push({
-          key: current.toISOString().slice(0, 10),
-          start: new Date(current),
-          end
-        });
-
-        current = addDays(current, 7);
-      }
-
-      return result;
-    }
-
-    function unique(values) {
-      return [...new Set(values.filter(Boolean))].sort((a, b) =>
-        a.localeCompare(b, "bg")
-      );
-    }
-
-    function fillSelect(id, values, allLabel) {
-      const select = $(id);
-      const oldValue = select.value;
-
-      select.innerHTML =
-        `<option value="all">${allLabel}</option>` +
-        values
-          .map(
-            (value) =>
-              `<option value="${escapeHtml(value)}">${escapeHtml(
-                value
-              )}</option>`
-          )
-          .join("");
-
-      if (
-        [...select.options].some(
-          (option) => option.value === oldValue
-        )
-      ) {
-        select.value = oldValue;
-      }
+      return Number.isNaN(fallback.getTime())
+        ? null
+        : fallback;
     }
 
     function escapeHtml(value) {
@@ -999,45 +747,234 @@
       );
     }
 
-    function eventPasses(event) {
-      const searchTerm = $("search").value
-        .toLowerCase()
-        .trim();
+    function formatDate(date) {
+      return `${String(date.getDate()).padStart(
+        2,
+        "0"
+      )}.${String(date.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}.${date.getFullYear()}`;
+    }
 
-      if (searchTerm) {
-        const searchableText = [
+    function addDays(date, numberOfDays) {
+      const result = new Date(date);
+      result.setDate(result.getDate() + numberOfDays);
+      return result;
+    }
+
+    function monday(date) {
+      const result = new Date(date);
+      const weekdayOffset = (result.getDay() + 6) % 7;
+
+      result.setDate(result.getDate() - weekdayOffset);
+      result.setHours(0, 0, 0, 0);
+
+      return result;
+    }
+
+    function overlaps(startA, endA, startB, endB) {
+      return startA <= endB && endA >= startB;
+    }
+
+    function laterDate(dateA, dateB) {
+      return dateA > dateB ? dateA : dateB;
+    }
+
+    function earlierDate(dateA, dateB) {
+      return dateA < dateB ? dateA : dateB;
+    }
+
+    function monthLabel(date) {
+      return `${MONTHS_BG[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    function quarterNumber(date) {
+      return Math.floor(date.getMonth() / 3) + 1;
+    }
+
+    function quarterLabel(date) {
+      const quarter = quarterNumber(date);
+
+      const quarterMonths = {
+        1: "януари–март",
+        2: "април–юни",
+        3: "юли–септември",
+        4: "октомври–декември"
+      };
+
+      return `Q${quarter} ${date.getFullYear()}: ${
+        quarterMonths[quarter]
+      }`;
+    }
+
+    function isSchoolContext(event) {
+      const layer = (event.layer || "").toLowerCase();
+      const team = (event.team_owner || "").toLowerCase();
+      const source = (
+        event.source_calendar || ""
+      ).toLowerCase();
+
+      return (
+        layer.includes("училищ") ||
+        team.includes("училищен календар") ||
+        source.includes("school calendar")
+      );
+    }
+
+    function normalize(rows) {
+      const normalized = rows
+        .map((row, index) => {
+          const startDate = parseDate(row.start_date);
+          const endDate =
+            parseDate(row.end_date) || startDate;
+
+          return {
+            ...row,
+            _rowId: index,
+            _start: startDate,
+            _end: endDate
+          };
+        })
+        .filter(
+          (event) =>
+            event._start &&
+            event._end &&
+            overlaps(
+              event._start,
+              event._end,
+              RANGE_START,
+              RANGE_END
+            )
+        );
+
+      /*
+        Премахва очевидни дубликати.
+
+        Ако има calendar_event_id, използва него.
+        В противен случай използва комбинация от име,
+        начална дата, крайна дата и екип.
+      */
+      const seen = new Set();
+
+      return normalized.filter((event) => {
+        const explicitId = (
+          event.calendar_event_id || ""
+        ).trim();
+
+        const fallbackId = [
           event.event_name,
-          event.team_owner,
-          event.layer,
-          event.audience,
-          event.notes,
-          event.source_calendar
+          event.start_date,
+          event.end_date,
+          event.team_owner
         ]
-          .join(" ")
+          .join("|")
           .toLowerCase();
 
-        if (!searchableText.includes(searchTerm)) {
+        const deduplicationKey =
+          explicitId || fallbackId;
+
+        if (seen.has(deduplicationKey)) {
           return false;
         }
+
+        seen.add(deduplicationKey);
+        return true;
+      });
+    }
+
+    function makeWeeks() {
+      const result = [];
+      let currentMonday = monday(RANGE_START);
+
+      while (currentMonday <= RANGE_END) {
+        const currentSunday = addDays(
+          currentMonday,
+          6
+        );
+
+        result.push({
+          key: currentMonday
+            .toISOString()
+            .slice(0, 10),
+
+          start: new Date(currentMonday),
+          end: currentSunday,
+
+          visibleStart: laterDate(
+            currentMonday,
+            RANGE_START
+          ),
+
+          visibleEnd: earlierDate(
+            currentSunday,
+            RANGE_END
+          )
+        });
+
+        currentMonday = addDays(currentMonday, 7);
       }
 
-      if (
-        $("team").value !== "all" &&
-        event.team_owner !== $("team").value
-      ) {
+      return result;
+    }
+
+    function uniqueInOriginalOrder(values) {
+      return [
+        ...new Set(values.filter(Boolean))
+      ];
+    }
+
+    function uniqueAlphabetically(values) {
+      return [
+        ...new Set(values.filter(Boolean))
+      ].sort((first, second) =>
+        first.localeCompare(second, "bg")
+      );
+    }
+
+    function fillSelect(
+      id,
+      values,
+      allLabel
+    ) {
+      const select = $(id);
+      const previousValue = select.value;
+
+      select.innerHTML =
+        `<option value="all">${allLabel}</option>` +
+        values
+          .map(
+            (value) =>
+              `<option value="${escapeHtml(
+                value
+              )}">${escapeHtml(value)}</option>`
+          )
+          .join("");
+
+      const previousValueStillExists = [
+        ...select.options
+      ].some(
+        (option) =>
+          option.value === previousValue
+      );
+
+      if (previousValueStillExists) {
+        select.value = previousValue;
+      }
+    }
+
+    function selectedTeam() {
+      return $("team").value;
+    }
+
+    function organizationalEventPasses(event) {
+      if (isSchoolContext(event)) {
         return false;
       }
 
       if (
-        $("layer").value !== "all" &&
-        event.layer !== $("layer").value
-      ) {
-        return false;
-      }
-
-      if (
-        $("audience").value !== "all" &&
-        !(event.audience || "").includes($("audience").value)
+        selectedTeam() !== "all" &&
+        event.team_owner !== selectedTeam()
       ) {
         return false;
       }
@@ -1045,65 +982,106 @@
       return true;
     }
 
-    function weekEvents(week) {
+    function organizationalEventsForWeek(week) {
       return allEvents.filter(
         (event) =>
-          eventPasses(event) &&
-          overlaps(event._start, event._end, week.start, week.end)
+          organizationalEventPasses(event) &&
+          overlaps(
+            event._start,
+            event._end,
+            week.start,
+            week.end
+          )
       );
     }
 
-    /*
-      MVP индекс:
-      1. Групираме събитията по слой.
-      2. За всеки слой взимаме най-високата тежест.
-      3. Събираме тези максимални стойности.
+    function schoolContextForWeek(week) {
+      return allEvents.filter(
+        (event) =>
+          isSchoolContext(event) &&
+          overlaps(
+            event._start,
+            event._end,
+            week.start,
+            week.end
+          )
+      );
+    }
 
-      Така няколко припокриващи се училищни събития не се
-      броят като напълно независими натоварвания.
-    */
+    function weekZone(eventCount) {
+      if (eventCount >= 6) {
+        return "packed";
+      }
+
+      if (eventCount >= 4) {
+        return "busy";
+      }
+
+      if (eventCount >= 2) {
+        return "active";
+      }
+
+      return "calm";
+    }
+
+    function zoneLabel(zone) {
+      const labels = {
+        calm: "Спокойна седмица",
+        active: "Активна седмица",
+        busy: "Натоварена седмица",
+        packed: "Напечена седмица"
+      };
+
+      return labels[zone] || zone;
+    }
+
     function computeWeek(week) {
-      const events = weekEvents(week);
-      const maxByLayer = {};
+      const organizationalEvents =
+        organizationalEventsForWeek(week);
 
-      events.forEach((event) => {
-        const layerKey = layerClass(event.layer);
-        const currentMaximum = maxByLayer[layerKey] || 0;
+      const schoolContext =
+        schoolContextForWeek(week);
 
-        maxByLayer[layerKey] = Math.max(
-          currentMaximum,
-          event._intensity
-        );
-      });
-
-      const load = Object.values(maxByLayer).reduce(
-        (sum, value) => sum + value,
-        0
+      const teams = uniqueAlphabetically(
+        organizationalEvents.map(
+          (event) => event.team_owner
+        )
       );
 
+      const eventCount =
+        organizationalEvents.length;
+
       return {
-        events,
-        load,
-        zone: zone(load),
-        maxByLayer
+        organizationalEvents,
+        schoolContext,
+        teams,
+        eventCount,
+        teamCount: teams.length,
+        zone: weekZone(eventCount)
       };
     }
 
     function render() {
       const calendar = $("calendar");
-      const quarterFilter = $("quarter").value;
-      const attentionOnly = $("attentionOnly").checked;
+      const quarterFilter =
+        $("quarter").value;
 
-      const groups = {};
-
-      let visibleWeeks = 0;
-      let attentionWeeks = 0;
-      let maximumLoad = 0;
+      const quarterGroups = {};
 
       const visibleEventIds = new Set();
+      const visibleTeams = new Set();
+
+      let busyWeeks = 0;
+      let peakEvents = 0;
 
       weeks.forEach((week) => {
-        const quarter = quarterLabel(week.start);
+        /*
+          Използваме реално видимия старт на седмицата.
+          Така 1–4 януари 2026 не се групира в Q4 2025.
+        */
+        const quarter = quarterLabel(
+          week.visibleStart
+        );
 
         if (
           quarterFilter !== "all" &&
@@ -1114,67 +1092,95 @@
 
         const computed = computeWeek(week);
 
-        const requiresAttention =
-          computed.zone === "high" ||
-          computed.zone === "risk";
+        computed.organizationalEvents.forEach(
+          (event) => {
+            visibleEventIds.add(event._rowId);
 
-        if (attentionOnly && !requiresAttention) {
-          return;
-        }
-
-        computed.events.forEach((event) =>
-          visibleEventIds.add(event._id)
+            if (event.team_owner) {
+              visibleTeams.add(event.team_owner);
+            }
+          }
         );
 
-        visibleWeeks++;
-
-        if (requiresAttention) {
-          attentionWeeks++;
+        if (
+          computed.zone === "busy" ||
+          computed.zone === "packed"
+        ) {
+          busyWeeks++;
         }
 
-        maximumLoad = Math.max(maximumLoad, computed.load);
+        peakEvents = Math.max(
+          peakEvents,
+          computed.eventCount
+        );
 
-        if (!groups[quarter]) {
-          groups[quarter] = [];
+        if (!quarterGroups[quarter]) {
+          quarterGroups[quarter] = [];
         }
 
-        groups[quarter].push({
+        quarterGroups[quarter].push({
           ...week,
           ...computed
         });
       });
 
-      $("evCount").textContent = visibleEventIds.size;
-      $("attentionCount").textContent = attentionWeeks;
-      $("maxLoad").textContent = maximumLoad;
-      $("shownWeeks").textContent = visibleWeeks;
+      $("eventCount").textContent =
+        visibleEventIds.size;
 
-      if (!Object.keys(groups).length) {
-        calendar.innerHTML =
-          '<div class="panel empty">Няма седмици за избраните филтри.</div>';
+      $("teamCount").textContent =
+        visibleTeams.size;
+
+      $("busyWeekCount").textContent =
+        busyWeeks;
+
+      $("peakCount").textContent =
+        peakEvents;
+
+      if (!Object.keys(quarterGroups).length) {
+        calendar.innerHTML = `
+          <div class="panel empty">
+            Няма данни за избраните филтри.
+          </div>
+        `;
+
         return;
       }
 
-      calendar.innerHTML = Object.entries(groups)
+      calendar.innerHTML = Object.entries(
+        quarterGroups
+      )
         .map(([quarter, quarterWeeks]) =>
-          renderQuarter(quarter, quarterWeeks)
+          renderQuarter(
+            quarter,
+            quarterWeeks
+          )
         )
         .join("");
 
       document
         .querySelectorAll(".week")
-        .forEach((element) =>
-          element.addEventListener("click", () =>
-            selectWeek(element.dataset.key)
-          )
-        );
+        .forEach((element) => {
+          element.addEventListener(
+            "click",
+            () => {
+              selectWeek(
+                element.dataset.key
+              );
+            }
+          );
+        });
     }
 
-    function renderQuarter(quarter, quarterWeeks) {
+    function renderQuarter(
+      quarter,
+      quarterWeeks
+    ) {
       const months = {};
 
       quarterWeeks.forEach((week) => {
-        const month = monthLabel(week.start);
+        const month = monthLabel(
+          week.visibleStart
+        );
 
         if (!months[month]) {
           months[month] = [];
@@ -1183,34 +1189,52 @@
         months[month].push(week);
       });
 
-      const riskWeeks = quarterWeeks.filter(
-        (week) => week.zone === "risk"
-      ).length;
+      const busyCount =
+        quarterWeeks.filter(
+          (week) => week.zone === "busy"
+        ).length;
 
-      const highWeeks = quarterWeeks.filter(
-        (week) => week.zone === "high"
-      ).length;
+      const packedCount =
+        quarterWeeks.filter(
+          (week) => week.zone === "packed"
+        ).length;
 
-      const peakLoad = quarterWeeks.reduce(
-        (maximum, week) => Math.max(maximum, week.load),
-        0
-      );
+      const peakCount =
+        quarterWeeks.reduce(
+          (maximum, week) =>
+            Math.max(
+              maximum,
+              week.eventCount
+            ),
+          0
+        );
 
       return `
-        <section class="q">
-          <div class="qhead">
+        <section class="quarter">
+          <div class="quarter-header">
             <div>
-              <div class="qtitle">${escapeHtml(quarter)}</div>
+              <div class="quarter-title">
+                ${escapeHtml(quarter)}
+              </div>
 
-              <div class="qmeta">
-                ${Object.keys(months).join(" · ")}
+              <div class="quarter-months">
+                ${Object.keys(months).join(
+                  " · "
+                )}
               </div>
             </div>
 
-            <div class="qstats">
-              <b>${riskWeeks}</b> рискови ·
-              <b>${highWeeks}</b> натоварени седмици<br />
-              пик на индекса: <b>${peakLoad}</b>
+            <div class="quarter-stats">
+              <b>${packedCount}</b> напечени ·
+              <b>${busyCount}</b> натоварени седмици
+              <br />
+              пик:
+              <b>${peakCount}</b>
+              ${
+                peakCount === 1
+                  ? "събитие"
+                  : "събития"
+              }
             </div>
           </div>
 
@@ -1219,10 +1243,14 @@
               .map(
                 ([month, monthWeeks]) => `
                   <div class="month">
-                    <div class="mname">${escapeHtml(month)}</div>
+                    <div class="month-title">
+                      ${escapeHtml(month)}
+                    </div>
 
                     <div class="weeks">
-                      ${monthWeeks.map(renderWeek).join("")}
+                      ${monthWeeks
+                        .map(renderWeek)
+                        .join("")}
                     </div>
                   </div>
                 `
@@ -1234,45 +1262,82 @@
     }
 
     function renderWeek(week) {
-      const layers = Object.keys(week.maxByLayer);
+      const eventWord =
+        week.eventCount === 1
+          ? "събитие"
+          : "събития";
+
+      const teamWord =
+        week.teamCount === 1
+          ? "екип"
+          : "екипа";
+
+      const schoolContextPreview =
+        week.schoolContext
+          .slice(0, 2)
+          .map((event) => event.event_name)
+          .filter(Boolean)
+          .join(" · ");
+
+      const extraSchoolItems =
+        Math.max(
+          week.schoolContext.length - 2,
+          0
+        );
 
       return `
         <div
           class="week ${week.zone} ${
-            selectedWeekKey === week.key ? "selected" : ""
+            selectedWeekKey === week.key
+              ? "selected"
+              : ""
           }"
           data-key="${week.key}"
         >
-          <div class="wtop">
-            <div class="wdate">
-              ${formatDate(week.start)} – ${formatDate(week.end)}
+          <div class="week-top">
+            <div class="week-date">
+              ${formatDate(
+                week.visibleStart
+              )} – ${formatDate(
+                week.visibleEnd
+              )}
             </div>
 
-            <div class="wload">${week.load}</div>
+            <div class="week-count-badge">
+              ${week.eventCount}
+            </div>
           </div>
 
-          <div class="wzone">${zoneLabel(week.zone)}</div>
-
-          <div class="wcount">
-            ${week.events.length} ${
-              week.events.length === 1 ? "събитие" : "събития"
-            }
+          <div class="week-zone">
+            ${zoneLabel(week.zone)}
           </div>
 
-          <div class="dots">
-            ${layers
-              .map(
-                (layer) => `
-                  <span
-                    class="dot ${layer}"
-                    title="${escapeHtml(
-                      layerDisplayName(layer)
-                    )}: ${week.maxByLayer[layer]}"
-                  ></span>
-                `
-              )
-              .join("")}
+          <div class="week-meta">
+            ${week.eventCount} ${eventWord}
+            · ${week.teamCount} ${teamWord}
           </div>
+
+          ${
+            week.schoolContext.length
+              ? `
+                <div class="school-context">
+                  <span class="school-dot"></span>
+
+                  <span>
+                    ${escapeHtml(
+                      schoolContextPreview
+                    )}
+
+                    ${
+                      extraSchoolItems
+                        ? ` · още ${extraSchoolItems}`
+                        : ""
+                    }
+                  </span>
+                </div>
+              `
+              : ""
+          }
         </div>
       `;
     }
@@ -1281,7 +1346,8 @@
       selectedWeekKey = key;
 
       const week = weeks.find(
-        (candidate) => candidate.key === key
+        (candidate) =>
+          candidate.key === key
       );
 
       if (!week) {
@@ -1290,124 +1356,151 @@
 
       const computed = computeWeek(week);
 
-      const layerBreakdown = Object.entries(
-        computed.maxByLayer
-      )
-        .map(
-          ([layer, value]) => `
-            <div class="layer-line">
-              <span>${escapeHtml(layerDisplayName(layer))}</span>
-              <b>${value}</b>
-            </div>
-          `
-        )
-        .join("");
+      const eventWord =
+        computed.eventCount === 1
+          ? "събитие"
+          : "събития";
 
-      const eventCards = computed.events.length
-        ? [...computed.events]
-            .sort((first, second) => {
-              if (
-                second._intensity !== first._intensity
-              ) {
-                return (
-                  second._intensity - first._intensity
+      const teamWord =
+        computed.teamCount === 1
+          ? "екип"
+          : "екипа";
+
+      const organizationalCards =
+        computed.organizationalEvents.length
+          ? [...computed.organizationalEvents]
+              .sort((first, second) => {
+                const teamComparison = (
+                  first.team_owner || ""
+                ).localeCompare(
+                  second.team_owner || "",
+                  "bg"
                 );
-              }
 
-              return first._start - second._start;
-            })
-            .map(
-              (event) => `
-                <div class="event">
-                  <div class="event-title">
-                    ${escapeHtml(event.event_name)}
-                  </div>
+                if (teamComparison !== 0) {
+                  return teamComparison;
+                }
 
-                  <div class="event-meta">
-                    ${formatDate(event._start)} –
-                    ${formatDate(event._end)}<br />
-                    ${escapeHtml(event.team_owner)} ·
-                    ${escapeHtml(event.layer)} ·
-                    натоварване ${event._intensity}
-                  </div>
+                return (
+                  first._start -
+                  second._start
+                );
+              })
+              .map(
+                (event) => `
+                  <div class="event-card">
+                    <div class="event-title">
+                      ${escapeHtml(
+                        event.event_name
+                      )}
+                    </div>
 
-                  <div>
+                    <div class="event-meta">
+                      ${formatDate(
+                        event._start
+                      )} – ${formatDate(
+                        event._end
+                      )}
+                    </div>
+
                     ${
-                      event.audience
-                        ? `<span class="pill">${escapeHtml(
-                            event.audience
-                          )}</span>`
+                      event.team_owner
+                        ? `
+                          <span class="team-pill">
+                            ${escapeHtml(
+                              event.team_owner
+                            )}
+                          </span>
+                        `
                         : ""
                     }
 
                     ${
-                      event.status
-                        ? `<span class="pill">${escapeHtml(
-                            event.status
-                          )}</span>`
-                        : ""
-                    }
-
-                    ${
-                      event.confidence
-                        ? `<span class="pill">${escapeHtml(
-                            event.confidence
-                          )}</span>`
+                      event.notes
+                        ? `
+                          <div class="event-meta">
+                            ${escapeHtml(
+                              event.notes
+                            )}
+                          </div>
+                        `
                         : ""
                     }
                   </div>
+                `
+              )
+              .join("")
+          : `
+              <div class="details-summary">
+                Няма организационни събития
+                за избрания екип.
+              </div>
+            `;
 
-                  ${
-                    event.notes
-                      ? `
-                        <div
-                          class="event-meta"
-                          style="margin-top: 8px"
-                        >
-                          ${escapeHtml(event.notes)}
-                        </div>
-                      `
-                      : ""
-                  }
-                </div>
-              `
-            )
-            .join("")
-        : '<div class="event-meta">Няма събития.</div>';
+      const schoolCards =
+        computed.schoolContext.length
+          ? `
+              <div class="context-heading">
+                Училищен контекст
+              </div>
+
+              ${computed.schoolContext
+                .map(
+                  (event) => `
+                    <div class="context-card">
+                      <div class="event-title">
+                        ${escapeHtml(
+                          event.event_name
+                        )}
+                      </div>
+
+                      <div class="event-meta">
+                        ${formatDate(
+                          event._start
+                        )} – ${formatDate(
+                          event._end
+                        )}
+                      </div>
+                    </div>
+                  `
+                )
+                .join("")}
+            `
+          : "";
 
       $("details").innerHTML = `
         <h3>
-          ${formatDate(week.start)} – ${formatDate(week.end)}
+          ${formatDate(
+            week.visibleStart
+          )} – ${formatDate(
+            week.visibleEnd
+          )}
         </h3>
 
-        <div class="event-meta">
-          Индекс: <b>${computed.load}</b><br />
-          Оценка: <b>${zoneLabel(computed.zone)}</b><br />
-          ${computed.events.length} ${
-            computed.events.length === 1 ? "събитие" : "събития"
-          }
+        <div class="details-summary">
+          <b>${zoneLabel(
+            computed.zone
+          )}</b><br />
+
+          ${computed.eventCount}
+          ${eventWord}
+          · ${computed.teamCount}
+          ${teamWord}
         </div>
 
-        ${
-          layerBreakdown
-            ? `
-              <div class="layer-breakdown">
-                ${layerBreakdown}
-              </div>
-            `
-            : ""
-        }
-
-        ${eventCards}
+        ${organizationalCards}
+        ${schoolCards}
       `;
 
       render();
     }
 
     async function load() {
-      $("status").className = "warn";
+      $("status").className =
+        "status loading";
+
       $("status").textContent =
-        "Зареждам данните от Google Sheet…";
+        "Зареждам данните…";
 
       try {
         const response = await fetch(
@@ -1420,39 +1513,42 @@
           );
         }
 
-        const csvText = await response.text();
+        const csvText =
+          await response.text();
 
-        allEvents = normalize(parseCSV(csvText));
+        allEvents = normalize(
+          parseCSV(csvText)
+        );
+
         weeks = makeWeeks();
+
+        const organizationalTeams =
+          uniqueAlphabetically(
+            allEvents
+              .filter(
+                (event) =>
+                  !isSchoolContext(event)
+              )
+              .map(
+                (event) =>
+                  event.team_owner
+              )
+          );
 
         fillSelect(
           "team",
-          unique(allEvents.map((event) => event.team_owner)),
+          organizationalTeams,
           "Всички екипи"
         );
 
         fillSelect(
-          "layer",
-          unique(allEvents.map((event) => event.layer)),
-          "Всички слоеве"
-        );
-
-        fillSelect(
-          "audience",
-          unique(
-            allEvents.flatMap((event) =>
-              (event.audience || "")
-                .split(";")
-                .map((value) => value.trim())
-            )
-          ),
-          "Всички аудитории"
-        );
-
-        fillSelect(
           "quarter",
-          unique(
-            weeks.map((week) => quarterLabel(week.start))
+          uniqueInOriginalOrder(
+            weeks.map((week) =>
+              quarterLabel(
+                week.visibleStart
+              )
+            )
           ),
           "Всички тримесечия"
         );
@@ -1464,13 +1560,23 @@
             "bg-BG"
           )}`;
 
-        $("status").className = "success";
+        const organizationalEventCount =
+          allEvents.filter(
+            (event) =>
+              !isSchoolContext(event)
+          ).length;
+
+        $("status").className =
+          "status success";
+
         $("status").textContent =
-          `Заредени са ${allEvents.length} събития.`;
+          `Заредени са ${organizationalEventCount} значими организационни събития.`;
 
         render();
       } catch (error) {
-        $("status").className = "error";
+        $("status").className =
+          "status error";
+
         $("status").textContent =
           `Грешка при зареждане: ${error.message}`;
 
@@ -1479,44 +1585,58 @@
       }
     }
 
-    [
-      "search",
-      "quarter",
-      "team",
-      "layer",
-      "audience"
-    ].forEach((id) => {
-      $(id).addEventListener("input", render);
-    });
-
-    $("attentionOnly").addEventListener(
+    $("quarter").addEventListener(
       "change",
-      render
+      () => {
+        selectedWeekKey = null;
+        render();
+      }
     );
 
-    $("reset").addEventListener("click", () => {
-      $("search").value = "";
-      $("quarter").value = "all";
-      $("team").value = "all";
-      $("layer").value = "all";
-      $("audience").value = "all";
-      $("attentionOnly").checked = false;
+    $("team").addEventListener(
+      "change",
+      () => {
+        selectedWeekKey = null;
 
-      selectedWeekKey = null;
+        $("details").innerHTML = `
+          <h3>Избери седмица</h3>
 
-      $("details").innerHTML = `
-        <h3>Избери седмица</h3>
+          <div class="details-summary">
+            Кликни върху седмица, за да видиш
+            събитията за избрания екип.
+          </div>
+        `;
 
-        <div class="event-meta">
-          Кликни върху седмица в календара, за да видиш
-          събитията и слоевете, които формират натоварването.
-        </div>
-      `;
+        render();
+      }
+    );
 
-      render();
-    });
+    $("reset").addEventListener(
+      "click",
+      () => {
+        $("quarter").value = "all";
+        $("team").value = "all";
 
-    $("reload").addEventListener("click", load);
+        selectedWeekKey = null;
+
+        $("details").innerHTML = `
+          <h3>Избери седмица</h3>
+
+          <div class="details-summary">
+            Кликни върху седмица, за да видиш
+            кои организационни събития и екипи
+            се наслагват в нея.
+          </div>
+        `;
+
+        render();
+      }
+    );
+
+    $("reload").addEventListener(
+      "click",
+      load
+    );
 
     load();
   </script>
